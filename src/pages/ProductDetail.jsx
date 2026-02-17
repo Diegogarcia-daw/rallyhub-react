@@ -41,13 +41,13 @@ const ProductDetail = () => {
     alert(`¡${product.nombre} añadido al carrito! `); 
   };
 
-  if (loading) return <div className="text-center py-20 text-2xl font-bold animate-pulse text-gray-700">Abriendo el capó... 🏎️🔧</div>;
-  if (!product) return <div className="text-center py-20 text-2xl font-bold text-red-600">Error 404: Producto fuera de pista 🚩</div>;
+  if (loading) return <div className="text-center py-20 text-2xl font-bold animate-pulse text-gray-700">Cargando...</div>;
+  if (!product) return <div className="text-center py-20 text-2xl font-bold text-red-600">Error 404: Producto no encontrado</div>;
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <Link to="/catalog" className="inline-flex items-center text-red-600 hover:text-gray-900 mb-6 font-bold transition-colors">
-        <ArrowLeft className="h-5 w-5 mr-2" /> Volver al Parque Cerrado
+        <ArrowLeft className="h-5 w-5 mr-2" /> Volver al Catálogo
       </Link>
 
       <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
