@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react'; 
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import { ShoppingCart, ArrowLeft } from 'lucide-react';
+import { CartContext } from '../context/CartContext'; 
 
 const ProductDetail = () => {
-
   const { id } = useParams(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -31,12 +34,20 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-  if (!product) return <div className="text-center py-20 text-2xl font-bold text-red-600">Error 404: El producto no se encuentra</div>;
+
+  const handleAddToCart = () => {
+    addToCart(product);
+
+    alert(`¡${product.nombre} añadido al carrito! `); 
+  };
+
+  if (loading) return <div className="text-center py-20 text-2xl font-bold animate-pulse text-gray-700">Abriendo el capó... 🏎️🔧</div>;
+  if (!product) return <div className="text-center py-20 text-2xl font-bold text-red-600">Error 404: Producto fuera de pista 🚩</div>;
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <Link to="/catalog" className="inline-flex items-center text-red-600 hover:text-gray-900 mb-6 font-bold transition-colors">
-        <ArrowLeft className="h-5 w-5 mr-2" /> Volver al Catálogo
+        <ArrowLeft className="h-5 w-5 mr-2" /> Volver al Parque Cerrado
       </Link>
 
       <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
@@ -61,9 +72,13 @@ const ProductDetail = () => {
           <div className="mt-auto">
             <span className="text-5xl font-black text-gray-900 block mb-6">{product.precio}€</span>
             
-            <button className="w-full bg-gray-900 hover:bg-red-600 text-white font-bold py-4 px-8 rounded-full flex items-center justify-center gap-3 transition-all duration-300 text-lg shadow-lg hover:shadow-red-600/50">
+
+            <button 
+              onClick={handleAddToCart}
+              className="w-full bg-gray-900 hover:bg-red-600 text-white font-bold py-4 px-8 rounded-full flex items-center justify-center gap-3 transition-all duration-300 text-lg shadow-lg hover:shadow-red-600/50 cursor-pointer"
+            >
               <ShoppingCart className="h-6 w-6" />
-              Añadir al Carrito
+              Añadir al baquet
             </button>
           </div>
         </div>
