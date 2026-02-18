@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
-
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -24,7 +24,16 @@ function App() {
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<Checkout />} />
+                
+                <Route 
+                  path="/checkout" 
+                  element={
+                    <ProtectedRoute>
+                      <Checkout />
+                    </ProtectedRoute>
+                  } 
+                />
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
               </Routes>
