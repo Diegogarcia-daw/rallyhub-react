@@ -9,7 +9,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Usamos la función login del contexto
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -19,13 +18,10 @@ const Login = () => {
     setIsSubmitting(true);
 
     try {
-      // Intentamos entrar
       await login(email, password);
-      // Si funciona, nos vamos al catálogo
       navigate('/catalog');
     } catch (err) {
       console.error("Error de login:", err);
-      // Traducimos los errores de Firebase
       if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === "auth/invalid-credential") {
         setError('Correo o contraseña incorrectos.');
       } else if (err.code === 'auth/too-many-requests') {
@@ -50,7 +46,6 @@ const Login = () => {
           <p className="text-gray-500 mt-2">Introduce tus credenciales para iniciar sesión</p>
         </div>
 
-        {/* Caja de Errores */}
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-3 text-sm font-medium">
             <AlertCircle className="h-5 w-5 flex-shrink-0" />
