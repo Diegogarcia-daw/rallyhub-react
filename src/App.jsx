@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer'; 
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import ProductDetail from './pages/ProductDetail';
@@ -13,12 +14,12 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <AuthProvider>   
+    <AuthProvider>
       <CartProvider>
         <Router>
           <div className="min-h-screen bg-gray-50 flex flex-col">
-            <Navbar />
-            <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <Navbar />            
+            <main className="flex-grow w-full">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/catalog" element={<Catalog />} />
@@ -33,11 +34,13 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
-
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
               </Routes>
             </main>
+
+            <Footer />
+            
           </div>
         </Router>
       </CartProvider>
